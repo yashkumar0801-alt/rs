@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Account | Rojgar Setu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="signup.css" />
+  </head>
+  <body>
+    <!-- Screen-fixed Back Button (Desktop View) -->
+    <a href="home.html" class="back-btn-screen">
+      <i class="fa-solid fa-arrow-left"></i> Back to home
+    </a>
+
+    <div class="signup-container">
+      <!-- Left Hero Image Banner -->
+      <div class="signup-visual">
+        <div class="visual-overlay"></div>
+        <div class="visual-content">
+          <!-- Mobile Back Button -->
+          <a href="home.html" class="back-btn-mobile">
+            <i class="fa-solid fa-arrow-left"></i> Back to home
+          </a>
+          <div class="brand brand-light brand-below-back">
+            <span class="brand-mark">R</span><span>rojgar <b>Setu</b></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Form Container -->
+      <div class="signup-card">
+        <header class="signup-header">
+          <p class="eyebrow">GET STARTED</p>
+          <h2>Create your account</h2>
+          <p class="subtitle">Enter your details below to set up your home profile.</p>
+        </header>
+
+        <form id="signupForm" action="dashboard.html" method="POST">
+          <div class="input-group">
+            <label for="fullName">Full name</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required />
+          </div>
+
+          <div class="input-grid">
+            <div class="input-group">
+              <label for="email">Email address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required />
+            </div>
+
+            <div class="input-group">
+              <label for="phone">Phone number</label>
+              <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number" required />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="address">Street address</label>
+            <input type="text" id="address" name="address" placeholder="House/Flat No., Building, Street area" required />
+          </div>
+
+          <div class="input-grid three-col">
+            <div class="input-group">
+              <label for="city">City</label>
+              <input type="text" id="city" name="city" placeholder="e.g. Patna" required />
+            </div>
+
+            <div class="input-group">
+              <label for="state">State</label>
+              <input type="text" id="state" name="state" placeholder="e.g. Bihar" required />
+            </div>
+
+            <div class="input-group">
+              <label for="pincode">Pincode</label>
+              <input type="text" id="pincode" name="pincode" placeholder="6-digit code" pattern="[0-9]{6}" required />
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" placeholder="Create a password" required />
+          </div>
+
+          <button type="submit" class="submit-btn">
+            Verify phone number &amp; email <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <p class="login-prompt">
+          Already have an account? <a href="login.html">Sign in</a>
+        </p>
+      </div>
+    </div>
+  </body>
+</html>

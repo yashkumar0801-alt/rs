@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Service Professionals | Rojgar Setu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="providers.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <a href="services.html" class="back-link">
+        <i class="fa-solid fa-arrow-left"></i> Back to Services
+      </a>
+      <a href="home.html" class="brand">
+        <span class="brand-mark">R</span><span>rojgar <b>Setu</b></span>
+      </a>
+    </header>
+
+    <main class="container">
+      <div class="title-section">
+        <p class="eyebrow">VERIFIED PROFESSIONALS</p>
+        <h1 id="pageTitle">Service Experts</h1>
+        <p class="subtitle" id="pageSubtitle">Select a verified professional in your area to view details and book.</p>
+      </div>
+
+      <!-- Dynamic list generated via JavaScript -->
+      <div id="providersContainer" class="providers-list"></div>
+    </main>
+
+    <!-- Authentication Popup Modal -->
+    <div id="authModal" class="modal-overlay">
+      <div class="modal-card">
+        <button class="close-modal" onclick="closeAuthModal()">&times;</button>
+        <i class="fa-solid fa-lock modal-icon"></i>
+        <h3>Account Required</h3>
+        <p>Please sign in or create an account to book a service provider.</p>
+        <div class="modal-actions">
+          <a href="login.html" class="btn-login">Sign In</a>
+          <a href="signup.html" class="btn-signup">Create Account</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data source & dynamic renderer script -->
+    <script src="data.js"></script>
+    <script src="home.js"></script>
+    <script>
+      // 1. Get requested category from URL (e.g. providers.html?category=beauty)
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentCategory = urlParams.get("category") || "beauty";
+
+      // Category titles dictionary
+      const categoryTitles = {
+        beauty: "Beauty & Wellness Experts",
+        cleaning: "Cleaning & Repair Experts",
+        appliance: "Appliance Repair Specialists",
+        electrician: "Electrician Services",
+        plumbing: "Plumbing Specialists",
+        home_help: "Home Help & Domestic Care"
+      };
+
+      // Set page heading dynamically
+      if (categoryTitles[currentCategory]) {
+        document.getElementById("pageTitle").textContent = categoryTitles[currentCategory];
+      }
+
+      // 2. Fetch array from data.js
+      const providers = providersData[currentCategory] || [];
+      const container = document.getElementById("providersContainer");
+
+      // 3. Render cards into HTML
+      if (providers.length === 0) {
+        container.innerHTML = `<p class="no-providers">No service providers available in this category currently.</p>`;
+      } else {
+        container.innerHTML = providers
+          .map(
+            (item) => `
+          <article class="provider-card">
+            <div class="avatar-box">
+              <i class="fa-solid fa-circle-user placeholder-avatar"></i>
+            </div>
+            <div class="provider-details">
+              <div class="header-row">
+                <h3>${item.name} <span class="verified-badge"><i class="fa-solid fa-circle-check"></i> Verified</span></h3>
+                <div class="price-tag"><small>Starting from</small> <b>${item.price}</b></div>
+              </div>
+              <p class="specialty">${item.specialty}</p>
+              <div class="meta-row">
+                <span class="rating"><i class="fa-solid fa-star"></i> ${item.rating} (${item.jobs} jobs)</span>
+                <span class="languages"><i class="fa-solid fa-language"></i> ${item.languages}</span>
+                <span class="experience"><i class="fa-solid fa-briefcase"></i> ${item.experience} exp</span>
+              </div>
+              <button class="book-btn" onclick="triggerBooking('${item.name}', '${item.price}', '${item.categoryIcon}')">
+                Book Specialist <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </article>
+        `
+          )
+          .join("");
+      }
+
+      // 4. Handle Booking & Auth Modal Logic
+      function triggerBooking(providerName, startingPrice, iconClass) {
+        const user = JSON.parse(localStorage.getItem("rsCustomer") || "{}");
+
+        if (user && user.name) {
+          if (typeof openBooking === "function") {
+            openBooking({
+              name: `Service by ${providerName}`,
+              price: startingPrice,
+              icon: iconClass || "fa-check"
+            });
+          }
+        } else {
+          document.getElementById("authModal").classList.add("active");
+        }
+      }
+
+      function closeAuthModal() {
+        document.getElementById("authModal").classList.remove("active");
+      }
+    </script>
+  </body>
+</html>
